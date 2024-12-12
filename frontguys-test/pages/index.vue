@@ -1,7 +1,7 @@
 <template>
-  <div class="flex align-top">
+  <div class="align-top md:flex">
     <div class="md:w-1/2">
-      <h1 class="text-xxl md:text-[20vw] text-neutral-900">Register now</h1>
+      <h1 class="text-xl my-2 p-2 font-bold text-neutral-900 md:font-normal md:m-0 md:text-[20vw] md:leading-normal">Register now</h1>
     </div>
     <div class="bg-green-200 md:w-1/2">
       <FormRegister/>

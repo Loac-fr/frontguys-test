@@ -7,32 +7,45 @@
       <h3 class="text-lg font-bold">
         Créer un compte
       </h3>
-      <InputText
-        input-id="email"
-        :is-disabled="!!currentEmail"
-        is-required
-        placeholder="Email"
-        type="email"
-        :value.sync="form.email"
-      />
-      <InputText
-        input-id="lastName"
-        is-required
-        placeholder="LastName"
-        :value.sync="form.lastName"
-      />
-      <InputText
-        input-id="firstName"
-        is-required
-        placeholder="FirstName"
-        :value.sync="form.firstName"
-      />
-      <InputPassword
-        input-id="password"
-        is-required
-        placeholder="Password"
-        :value.sync="form.password"
-      />
+      <div>
+        <label for="email">Email</label>
+        <InputText
+          input-id="email"
+          :is-disabled="!!currentEmail"
+          is-required
+          placeholder="Email"
+          type="email"
+          :value.sync="form.email"
+        />
+      </div>
+      <div>
+        <label for="lastName">Last Name</label>
+        <InputText
+          input-id="lastName"
+          is-required
+          placeholder="LastName"
+          :value.sync="form.lastName"
+        />
+      </div>
+      <div>
+        <label for="firstName">First Name</label>
+        <InputText
+          input-id="firstName"
+          is-required
+          placeholder="FirstName"
+          :value.sync="form.firstName"
+        />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <InputText
+          input-id="password"
+          is-required
+          placeholder="Password"
+          :value.sync="form.password"
+          type="password"
+        />
+      </div>
     </div>
     
     <div class="flex flex-col w-full gap-6 px-4 md:px-6">
@@ -87,11 +100,10 @@ export default Vue.extend({
 
         // additionnal filtering & form validation...
 
-        fetch('https://dummyjson.com/auth/login', {
+        await fetch('https://dummyjson.com/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            
             username: this.form.firstName,
             password: this.form.password,
             expiresInMins: 30, // optional, defaults to 60
@@ -107,7 +119,7 @@ export default Vue.extend({
         // this.handleTracking();
 
       } catch (error) {
-        console.log('catching error')
+        console.log('catching error:', error)
         this.errorMessage = 'generic error message';
         // this.$errorMonitor.report(error, 'fatal');
 

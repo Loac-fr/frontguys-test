@@ -15,7 +15,7 @@
       :placeholder="placeholder"
       :readonly="isReadonly"
       :required="isRequired"
-      type="text"
+      :type="type"
     >
       <p
         v-if="error"
@@ -63,6 +63,10 @@ export default Vue.extend({
     placeholder: {
       type: String,
       default: '',
+    },
+    type: {
+      type: String,
+      default: 'text', // should be in enum + validator
     },
     value: {
       type: String,
