@@ -11,7 +11,6 @@
         <label for="email">Email</label>
         <InputText
           input-id="email"
-          :is-disabled="!!currentEmail"
           is-required
           placeholder="Email"
           type="email"
@@ -55,11 +54,16 @@
       >
         {{ errorMessage }}
       </p>
+      <p
+        v-if="isRegisteredUser"
+        class="text-2xl text-green-900"
+      >
+       Success, user "{{ userCreated.username }}" created
+      </p>
       <BaseButton
         button-type="submit"
         data-testid="form-register-submit"
         :is-loading="isLoading"
-        is-primary
       >
         Register
       </BaseButton>
@@ -69,27 +73,28 @@
 </template>
 
 <script lang="ts">
-import Vue, { PropType } from 'vue';
-
+import Vue from 'vue'
 
 export default Vue.extend({
   name: 'FormRegister',
-  props: {
-    currentEmail: {
-      type: String as PropType<string>,
-      default: '',
+  computed: {
+    isRegisteredUser(): boolean {
+      return this.userCreated && this.userCreated.username !== '';
     },
   },
   data() {
     return {
       errorMessage: null as String | null,
       form: { // would be typed
-        email: this.currentEmail || '',
+        email: '',
         firstName: '',
         lastName: '',
         password: '',
       },
       isLoading: false,
+      userCreated: { // would be typed
+        username: '',
+      },
     };
   },
   methods: {
@@ -98,31 +103,32 @@ export default Vue.extend({
         this.errorMessage = null;
         this.setLoadingState(true);
 
-        // additionnal filtering & form validation...
+        // additionnal filtering & form validation in separate method...
 
-        await fetch('https://dummyjson.com/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const response = await fetch("https://dummyjson.com/users/add", {
+          method: "POST",
+          headers: {
+            'Content-Type': "application/json",
+            'Access-Control-Allow-Credentials': 'true',
+          },
           body: JSON.stringify({
             username: this.form.firstName,
             password: this.form.password,
-            expiresInMins: 30, // optional, defaults to 60
-          }),
-          credentials: 'include' // Include cookies (e.g., accessToken) in the request
+          })
         })
-        .then(res => res.json())
-        .then(console.log);
+        
+        if (!response.ok) {
+            throw new Error("Error")
+        }
+        
+        const fmtResponse = await response.json();
 
-        // const user = await this.$services.authService.register(fmtPayload);
-
-        // this.$accessor.user.SET_USER(user); // NOTE: set user but let 'authenticated' set to false.
-        // this.handleTracking();
+        this.userCreated.username = fmtResponse?.username;
 
       } catch (error) {
         console.log('catching error:', error)
-        this.errorMessage = 'generic error message';
-        // this.$errorMonitor.report(error, 'fatal');
-
+        this.errorMessage = 'Generic error message';
+      } finally {
         this.setLoadingState(false);
       }
     },

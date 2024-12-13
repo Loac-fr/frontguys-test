@@ -1,6 +1,6 @@
 <template>
   <button
-    class="relative inline-flex items-center justify-center p-3.5 font-sans text-sm font-semibold rounded-sm ring-1 ring-gray ring-inset"
+    class="relative inline-flex items-center justify-center p-3.5 font-sans text-sm font-semibold rounded-sm ring-1 ring-gray ring-inset disabled:opacity-40"
     data-testid="base-button"
     :disabled="isDisabled || isLoading"
     :type="buttonType"
@@ -10,7 +10,7 @@
       v-if="isLoading"
       aria-busy="true"
       aria-live="polite"
-      class="absolute w-full h-full"
+      class="absolute w-full h-full top-3"
     >
       Loading...
     </span>
