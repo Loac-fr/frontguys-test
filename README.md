@@ -1,5 +1,20 @@
 # frontguys-test
 
+## Présentation
+
+Un petit projet rapide, créé avec Nuxt 2.
+Facilité de mise en place et de déploiement avec Github Actions & Pages.
+
+### Atomic design
+
+Création des composants en atomic design, une architecture permettant une organisation de fichiers et respectant la séparation des responsabilités. Le style est composé avec Tailwind.
+
+### Formulaire
+
+Création d'un simple formulaire d'enregistrement de compte utilisant une dummy API.
+Le formulaire est un bon exemple d'interface, présentant des problématiques d'accessibilité, de layout, d'intégration et d'appels réseaux.
+(+ gestion du state, tokens, etc... que je n'ai pas mis en place dans ce test).
+
 ## Build Setup
 
 ```bash
